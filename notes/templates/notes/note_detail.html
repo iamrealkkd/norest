@@ -1,0 +1,40 @@
+{% extends "notes/base.html" %}
+
+{% block title %}{{ note.title }}{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header bg-success text-white">
+        <h4>{{ note.title }}</h4>
+        <small>Uploaded on {{ note.uploaded_at|date:"M d, Y" }}</small>
+    </div>
+    <div class="card-body">
+        {% if note.summary %}
+        <div class="mb-4">
+            <h5>Summary</h5>
+            <p>{{ note.summary }}</p>
+        </div>
+        {% endif %}
+        
+        <div class="mb-4">
+            <h5>Full Text</h5>
+            <div class="p-3 bg-light rounded">
+                {{ note.processed_text|linebreaks }}
+            </div>
+        </div>
+        
+        {% if note.audio_file %}
+        <div class="mb-4">
+            <h5>Audio Version</h5>
+            <audio controls class="w-100">
+                <source src="{{ note.audio_file.url }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        {% endif %}
+    </div>
+    <div class="card-footer">
+        <a href="{% url 'notes:note_list' %}" class="btn btn-outline-secondary">Back to List</a>
+    </div>
+</div>
+{% endblock %}

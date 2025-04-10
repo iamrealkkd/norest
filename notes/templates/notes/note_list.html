@@ -1,0 +1,22 @@
+{% extends "notes/base.html" %}
+
+{% block title %}My Notes{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">My Notes</h2>
+<div class="list-group">
+    {% for note in notes %}
+    <a href="{% url 'notes:note_detail' note.id %}" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ note.title }}</h5>
+            <small>{{ note.uploaded_at|date:"M d, Y" }}</small>
+        </div>
+        {% if note.summary %}
+        <p class="mb-1">{{ note.summary|truncatewords:30 }}</p>
+        {% endif %}
+    </a>
+    {% empty %}
+    <div class="alert alert-info">You haven't uploaded any notes yet.</div>
+    {% endfor %}
+</div>
+{% endblock %}
